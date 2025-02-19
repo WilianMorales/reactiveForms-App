@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidator, ValidationErrors } from "@angular/forms";
-import { delay, Observable, of } from "rxjs";
+import { delay, map, Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -8,14 +8,13 @@ import { delay, Observable, of } from "rxjs";
 export class EmailValidator implements AsyncValidator {
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
-
     const email = control.value;
     const httpCallObservable = new Observable<ValidationErrors | null>( (subscriber) => {
 
       console.log({ email });
 
       if( email === 'admin@dev.com') {
-        subscriber.next({ emailTaken: true});
+        subscriber.next({ emailIsUsed: true});
         subscriber.complete();
         // return;
       }

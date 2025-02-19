@@ -24,6 +24,14 @@ export class RegisterPageComponent {
     }
   );
 
+  get emailError(): string {
+    const email = this.myForm.get('email')
+    if ( email!.getError('required') ) return 'El email es obligatorio'
+    else if ( email!.getError('pattern') ) return 'El email debe tener un formato de correo'
+    else if ( email!.getError('emailIsUsed') ) return 'El email ya está siendo usado por otro usuario'
+    return ''
+  }
+
   constructor(
     private fb: FormBuilder,
     private validatorsService: ValidatorsService,
