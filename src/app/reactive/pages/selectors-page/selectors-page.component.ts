@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { filter, map, Observable, switchMap, tap } from 'rxjs';
 import { CountriesService } from './service/countries.service';
 import { Region, SmallCountry } from './interface/country.interfaces';
@@ -63,6 +63,19 @@ export class SelectorsPageComponent implements OnInit {
         this.borders = countries;
       })
   }
+
+  isInvalidField = (field: string) => {
+    const f = this.myForm.get(field)
+    return f?.errors && f?.touched && f?.invalid
+  }
+
+  save = () => {
+    if (this.myForm.invalid) {
+        this.myForm.markAllAsTouched()
+        return
+    }
+    console.log(this.myForm.value)
+}
 
   /* onCountryChanged(): void {
     this.myForm.get('country')!.valueChanges

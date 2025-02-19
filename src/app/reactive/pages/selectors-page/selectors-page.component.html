@@ -1,46 +1,64 @@
 <h2>Multiples Selectores Anidados</h2>
 <hr>
+<div class="row">
+  <div class="col-sm-12 col-md-8">
+    <form [formGroup]="myForm" (ngSubmit)="save()">
+      <!-- Region -->
+      <div class="row mb-3">
+        <div class="col">
+          <label class="form-label">Continente:</label>
+          <select formControlName="region" class="form-control">
+            <option value="">-- Seleccione un Continente --</option>
+            <option *ngFor="let region of regions" [value]="region"> {{ region }} </option>
+          </select>
+          <span class="form-text text-danger" *ngIf="isInvalidField('region')">
+            Por favor seleccione un continente.
+          </span>
+        </div>
+      </div>
 
-<form [formGroup]="myForm">
-  <!-- Region -->
-  <div class="row mb-3">
-    <div class="col">
-      <label class="form-label">Continente:</label>
-      <select formControlName="region" class="form-control">
-        <option value="">-- Seleccione un Continente --</option>
-        <option *ngFor="let region of regions" [value]="region"> {{ region }} </option>
-      </select>
-    </div>
+      <!-- Countries -->
+      <div class="row mb-3" *ngIf="countriesByRegion.length > 0">
+        <div class="col">
+          <label class="form-label">País:</label>
+          <select formControlName="country" class="form-control">
+            <option value="">-- Seleccione un País --</option>
+            <option *ngFor="let country of countriesByRegion" [value]="country.cca3"> {{ country.name }} </option>
+          </select>
+          <span class="form-text text-danger" *ngIf="isInvalidField('country')">
+            Por favor seleccione un país.
+          </span>
+        </div>
+      </div>
+
+      <!-- Borders -->
+      <div class="row mb-3" *ngIf="borders.length > 0">
+        <div class="col">
+          <label class="form-label">Fronteras:</label>
+          <select formControlName="borders" class="form-control">
+            <option value="">-- Seleccione la Frontera --</option>
+            <option *ngFor="let country of borders" [value]="country.cca3"> {{ country.name }} </option>
+          </select>
+          <span class="form-text text-danger" *ngIf="isInvalidField('borders')">
+            Por favor seleccione una frontera.
+          </span>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col">
+            <button class="btn btn-primary float-end" type="submit" [disabled]="myForm.pending">Consultar</button>
+        </div>
+      </div>
+    </form>
   </div>
 
-  <!-- Countries -->
-  <div class="row mb-3" *ngIf="countriesByRegion.length > 0">
-    <div class="col">
-      <label class="form-label">País:</label>
-      <select formControlName="country" class="form-control">
-        <option value="">-- Seleccione un País --</option>
-        <option *ngFor="let country of countriesByRegion" [value]="country.cca3"> {{ country.name }} </option>
-      </select>
-    </div>
-  </div>
-
-  <!-- Borders -->
-  <div class="row mb-3" *ngIf="borders.length > 0">
-    <div class="col">
-      <label class="form-label">Fronteras:</label>
-      <select formControlName="borders" class="form-control">
-        <option value="">-- Seleccione la Frontera --</option>
-        <option *ngFor="let country of borders" [value]="country.cca3"> {{ country.name }} </option>
-      </select>
-    </div>
-  </div>
-</form>
-
-<h3>Formulario: </h3>
-<code>
-  {{ myForm.value | json}}
-</code>
-<br>
-<p>
-  is form valid: {{ myForm.valid }}
-</p>
+  <h3>Formulario: </h3>
+  <code>
+    {{ myForm.value | json}}
+  </code>
+  <br>
+  <pre>
+    is form valid: {{ myForm.valid }}
+  </pre>
+</div>
