@@ -8,8 +8,7 @@ interface MenuItem {
 @Component({
   selector: 'shared-side-menu',
   templateUrl: './side-menu.component.html',
-  styles: [
-  ]
+  styles: [`li { cursor: pointer; }`]
 })
 export class SideMenuComponent {
 
@@ -23,5 +22,11 @@ export class SideMenuComponent {
   public authMenu: MenuItem[] = [
     { title: 'Registro', route: './auth' }
   ];
+
+  public templateMenu: MenuItem[] = [
+    { title: 'Básicos', route: './template/basics' },
+    { title: 'Dinámicos', route: './template/dynamic' },
+    { title: 'Switches', route: './template/switches' }
+  ]
 
 }
